@@ -1,6 +1,6 @@
 fn main() {
-    let arguments = std::env::args();
-    for arg in arguments {
-        println!("Got arg: {}", arg);
-    }
+    let mut arguments = std::env::args().skip(1);
+    let key = arguments.next().unwrap();
+    let value = arguments.next().unwrap();
+    println!("Key: {}, value: {}", key, value);
 }
