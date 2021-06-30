@@ -31,12 +31,18 @@ impl Database {
         self.hashmap.insert(key, value);
     }
 
-    fn flush(self) -> std::io::Result<()> {
-        let contents = todo!();
-        // std::fs::write("kv.db", contents);
+    fn serialize(self) -> String {
+        let mut string = String::new();
+        for (key, value) in self.hashmap.iter() {
+            string.push_str(&key);
+            string.push('\t');
+            string.push_str(&value);
+            string.push('\n');
+        }
+        string
     }
-}
 
-fn write_database(key: String, value: String) -> std::io::Result<()> {
-    std::fs::write("kv.db", format!("{}\t{}\n", key, value))
+    fn flush(self) -> std::io::Result<()> {
+        std::fs::write("kv.db", self.serialize())
+    }
 }
